@@ -1,10 +1,7 @@
 package com.thrive_java_ecommerce.E_Commerce.API.service;
 
 import com.thrive_java_ecommerce.E_Commerce.API.entity.User;
-import com.thrive_java_ecommerce.E_Commerce.API.model.SearchUserRequest;
-import com.thrive_java_ecommerce.E_Commerce.API.model.UpdateUserRequest;
-import com.thrive_java_ecommerce.E_Commerce.API.model.UserRequest;
-import com.thrive_java_ecommerce.E_Commerce.API.model.UserResponse;
+import com.thrive_java_ecommerce.E_Commerce.API.model.*;
 import com.thrive_java_ecommerce.E_Commerce.API.repository.UserRepository;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
 
 @Service
 public class UserService {
@@ -129,4 +128,13 @@ public class UserService {
 
         return new PageImpl<>(userResponses, pageable, users.getTotalElements());
     }
+
+    @Transactional(readOnly = true)
+    public UserResponse login(LoginRequest request){
+
+        User user = userRepository.findByEmail(request.getEmail(), request.getPassword());
+
+        return toUserResponse(user);
+    }
+
 }

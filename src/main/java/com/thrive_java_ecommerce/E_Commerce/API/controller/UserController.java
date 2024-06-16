@@ -104,5 +104,15 @@ public class UserController {
                 .build();
     }
 
-
+    @PostMapping(
+            path = "/login",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<String> login(@RequestBody LoginRequest request){
+        userService.login(request);
+        return WebResponse.<String>builder()
+                .message("login success")
+                .build();
+    }
 }
