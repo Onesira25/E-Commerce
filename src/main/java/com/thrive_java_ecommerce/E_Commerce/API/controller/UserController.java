@@ -109,10 +109,11 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> login(@RequestBody LoginRequest request){
-        userService.login(request);
-        return WebResponse.<String>builder()
-                .message("login success")
+    public WebResponse<UserResponse> login(@RequestBody LoginRequest request){
+        UserResponse userResponse = userService.login(request);
+        return WebResponse.<UserResponse>builder()
+                .message("success login")
+                .data(userResponse)
                 .build();
     }
 }
