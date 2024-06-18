@@ -114,11 +114,9 @@ public class ProductService {
         Product product = productRepository.findById(request.getId())
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "product not found"));
 
-        Integer qtyUpdate = (product.getQty() + request.getQty());
-
         product.setName(request.getName());
         product.setPrice(request.getPrice());
-        product.setQty(qtyUpdate);
+        product.setQty(request.getQty());
         product.setDescription(request.getDescription());
         productRepository.save(product);
 
